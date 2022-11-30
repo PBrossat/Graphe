@@ -2,16 +2,19 @@
 #define _GRAPHE
 #include "Noeud.h"
 #include "Element.h"
+#include "vector"
 
 
 class Graphe 
 {
     public:
 
+    Graphe(int, int, vector<int>);
+    
     Graphe(unsigned int nbLignes,unsigned int nbColonnes);
 
     ~Graphe();
-    
+
     void modificationAltitudeSommet();
 
     void affichageGrilleHauteur();
@@ -20,13 +23,25 @@ class Graphe
 
     unsigned int getAltitude();
 
-    Noeud * getVoisinNord();
+    Noeud * getVoisinNord(Noeud* noeud);
 
-    Noeud * getVoisinSud();
+    Noeud * getVoisinSud(Noeud* noeud);
 
-    Noeud * getVoisinEst();
+    Noeud * getVoisinEst(Noeud* noeud);
 
-    Noeud * getVoisinOuest();
+    Noeud * getVoisinOuest(Noeud* noeud);
 
+    bool voisinExistant(Noeud* noeud, unsigned int voisin);
+
+    private :
+
+    Noeud* noeud; 
+
+    unsigned int tailleGraphe;
+
+    unsigned int nbLignes;
+
+    unsigned int nbColonnes;
+    
 };
 #endif
