@@ -8,11 +8,25 @@ class Graphe
 {
     public:
 
-    Graphe();
-    ~Graphe();
     Graphe(unsigned int nbLignes,unsigned int nbColonnes);
 
-
+    ~Graphe();
     
+    void modificationAltitudeSommet();
+
+    void affichageGrilleHauteur();
+
+    unsigned int getIndice();
+
+    unsigned int getAltitude();
+
+    Noeud * getVoisinNord();
+
+    Noeud * getVoisinSud();
+
+    Noeud * getVoisinEst();
+
+    Noeud * getVoisinOuest();
+
 };
 #endif
