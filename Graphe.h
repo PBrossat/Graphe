@@ -20,6 +20,8 @@ public:
     void modifAltitude(int indice, int nouvelleAltitude);
     void affichage() const;
     void rechercheChemin();
+    void livraison();
+    void nombreVoisin(int indice);
 
 private:
     vector<int> altitude;
