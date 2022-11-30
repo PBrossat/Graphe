@@ -2,32 +2,35 @@
 #include <iostream>
 using namespace std;
 
-Graphe::Graphe()
+
+
+// Graphe::Graphe(unsigned int nbLignes,unsigned int nbColonnes)
+// {
+//     tailleGraphe=nbLignes*nbColonnes;
+// }
+
+int Graphe::getIndice(int i, int j)
 {
-    tailleGraphe=0;
+    return i*C+j;
 }
 
-Graphe::Graphe(unsigned int nbLignes,unsigned int nbColonnes)
+int Graphe::getVoisinNord(int indice)
 {
-    tailleGraphe=nbLignes*nbColonnes;
+    return indice-this->C;
 }
 
-Noeud* Graphe::getVoisinNord(Noeud* noeud)
+int Graphe::getVoisinSud(int indice)
 {
-    return noeud
+    return indice+this->C;
 }
 
-Noeud* Graphe::getVoisinSud(Noeud* noeud)
+int Graphe::getVoisinOuest(int indice)
 {
-    
+    return indice+1;
 }
 
-Noeud* Graphe::getVoisinEst(Noeud* noeud)
+int Graphe::getVoisinEst(int indice)
 {
-    
+    return indice-1;
 }
 
-Noeud* Graphe::getVoisinOuest(Noeud* noeud)
-{
-    
-}
