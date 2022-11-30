@@ -5,7 +5,8 @@
 class Graphe
 {
 public:
-    Graphe(int , int , vector<int>);
+    Graphe(int, int, vector<int>);
+    Graphe(string);
     ~Graphe();
     void modificationAltitudeSommet();
     void affichageGrilleHauteur();
