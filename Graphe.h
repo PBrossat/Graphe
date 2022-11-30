@@ -1,4 +1,4 @@
-#ifndef _GRPAHE
+#ifndef _GRAPHE
 #define _GRAPHE
 #include <vector>
 
@@ -19,7 +19,7 @@ public:
     bool voisinExistant(int, int);
 
 private:
-    int tailleGraphe;
+    vector<int> altitude;
     int L;
     int C;
 };
