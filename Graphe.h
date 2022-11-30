@@ -19,14 +19,14 @@ public:
     Graphe(int, int, vector<int>);
     Graphe(const string);
     ~Graphe();
-    void affichageGrilleHauteur();
+    void affichageGrilleHauteur(); 
     int getIndice(int i, int j);
     int getAltitude(int indice);
-    int getVoisinNord(int indice);
+    int getVoisin(int indice,Direction d);
     int getVoisinSud(int indice);
     int getVoisinEst(int indice);
     int getVoisinOuest(int indice);
-    bool voisinExistant(int indice,Direction);
+    bool voisinExistant(int indice,Direction d);
     void modifAltitude(int indice, int nouvelleAltitude);
     void affichage() const;
     void rechercheChemin();
