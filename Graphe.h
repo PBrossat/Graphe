@@ -1,45 +1,25 @@
 #ifndef _GRPAHE
 #define _GRAPHE
-#include "vector"
+#include <vector>
 
-
-class Graphe 
+class Graphe
 {
-    public:
-
+public:
     Graphe(int, int, vector<int>);
-    
-    Graphe(unsigned int nbLignes,unsigned int nbColonnes);
-
     ~Graphe();
-
     void modificationAltitudeSommet();
-
     void affichageGrilleHauteur();
+    int getIndice();
+    int getAltitude();
+    int getVoisinNord();
+    int getVoisinSud();
+    int getVoisinEst();
+    int getVoisinOuest();
+    bool voisinExistant(int, int);
 
-    unsigned int getIndice();
-
-    unsigned int getAltitude();
-
-    Noeud * getVoisinNord(Noeud* noeud);
-
-    Noeud * getVoisinSud(Noeud* noeud);
-
-    Noeud * getVoisinEst(Noeud* noeud);
-
-    Noeud * getVoisinOuest(Noeud* noeud);
-
-    bool voisinExistant(Noeud* noeud, unsigned int voisin);
-
-    private :
-
-    Noeud* noeud; 
-
-    unsigned int tailleGraphe;
-
-    unsigned int nbLignes;
-
-    unsigned int nbColonnes;
-    
+private:
+    int tailleGraphe;
+    int L;
+    int C;
 };
 #endif
