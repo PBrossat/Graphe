@@ -1,42 +1,42 @@
+#pragma once
 #ifndef _GRAPHE
 #define _GRAPHE
+#include <iostream>
 #include <vector>
+
+enum Direction
+{
+    NORD = 0,
+    EST = 1,
+    SUD = 2,
+    OUEST = 3
+};
 
 class Graphe
 {
 
-enum Direction 
-{
-    NORD=0,
-    EST=1,
-    SUD=2,
-    OUEST=3
-};
-
-    
 public:
-
-    Graphe(int, int, vector<int>);
-    Graphe(const string);
+    Graphe(int, int, std::vector<int>);
+    Graphe(const std::string);
+    Graphe(const Graphe &);
+    Graphe &operator=(const Graphe &);
     ~Graphe();
-    void affichageGrilleHauteur(); 
-    int getIndice(int i, int j);
-    int getAltitude(int indice);
-    int getVoisin(int indice,Direction d);
-    int getVoisinSud(int indice);
-    int getVoisinEst(int indice);
-    int getVoisinOuest(int indice);
-    bool voisinExistant(int indice,Direction d);
-    void modifAltitude(int indice, int nouvelleAltitude);
-    void affichage() const;
+
+    int getIndice(int, int);
+    int getAltitude(int);
+    int getVoisin(int, Direction);
+    void modifAltitude(int, int);
+    int nombreVoisin(int);
+    bool verifIndice(int);
+
+    void affichage();
+
     void rechercheChemin();
     void livraison();
-    void nombreVoisin(int indice);
 
 private:
-    vector<int> altitude;
     int L;
     int C;
-
+    std::vector<int> altitude;
 };
 #endif

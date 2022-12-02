@@ -1,116 +1,148 @@
+#include <fstream>
+#include <string>
 #include "Graphe.h"
-#include <iostream>
-using namespace std;
+// using namespace std;
 
+Graphe::Graphe(const std::string data)
+{
+    std::ifstream file(data);
+    if (file.is_open())
+    {
+        std::string line;
+        file >> this->L >> this->C;
+        int tmp;
+        while (file >> tmp)
+        {
+            this->altitude.push_back(tmp);
+        }
+    }
+    if (this->altitude.size() != (static_cast<unsigned long long>(this->L * this->C)))
+    {
+        std::cout << "Donnée Invalide" << std::endl;
+    }
+}
 
+Graphe::Graphe(const Graphe &g)
+{
+    this->C = g.C;
+    this->L = g.L;
+    this->altitude = g.altitude;
+}
 
-// Graphe::Graphe(unsigned int nbLignes,unsigned int nbColonnes)
-// {
-//     tailleGraphe=nbLignes*nbColonnes;
-// }
+Graphe &Graphe::operator=(const Graphe &g)
+{
+    if (this == &g)
+    {
+        return *this;
+    }
+    Graphe grph(g);
+    return grph;
+}
 
-
+Graphe::~Graphe()
+{
+}
 
 int Graphe::getIndice(int i, int j)
 {
-    return i*C+j;
+    if (i > this->L - 1 || j > this->C - 1)
+    {
+        return -1;
+    }
+    return i * C + j;
 }
-
-
-
-// int Graphe::getVoisinNord(int indice)
-// {
-//     return indice-this->C;
-// }
-
-
-
-// int Graphe::getVoisinSud(int indice)
-// {
-//     return indice+this->C;
-// }
-
-
-
-// int Graphe::getVoisinOuest(int indice)
-// {
-//     return indice+1;
-// }
-
-
-
-// int Graphe::getVoisinEst(int indice)
-// {
-//     return indice-1;
-// }
-
-
 
 int Graphe::getAltitude(int indice)
 {
-    return altitude[indice];
+    if (!this->verifIndice(indice))
+    {
+        return -1;
+    }
+    return this->altitude[indice];
 }
 
-
-
-int Graphe::getVoisin(int indice , Direction d)
+int Graphe::getVoisin(int indice, Direction d)
 {
-    switch (d) 
+    if (!this->verifIndice(indice))
     {
-        case 'NORD':
-            return indice-this->C;
+        return -1;
+    }
+    switch (d)
+    {
+    case NORD:
+        if (indice / this->C == 0)
+        {
+            return -1;
+        }
+        return indice - this->C;
         break;
 
-        case 'EST':
-            return indice-1;
+    case EST:
+        if (indice % this->C == 0)
+        {
+            return -1;
+        }
+        return indice - 1;
         break;
 
-        case 'OUEST':
-            return indice+1;
+    case OUEST:
+        if (indice % this->C == this->C - 1)
+        {
+            return -1;
+        }
+        return indice + 1;
         break;
 
-        case 'SUD':
-            return indice+this->C;
+    case SUD:
+        if (indice / this->C == this->L - 1)
+        {
+            return -1;
+        }
+        return indice + this->C;
         break;
     }
 }
-
-bool Graphe::voisinExistant(int indice, Direction d)
-{
-    switch (d) 
-    {
-        case 'NORD':
-            if (getVoisin(indice,d)>=0) //si l'indice du voisin est positif (si il appartient au graphe)
-            {
-                return true; 
-            }else return false; 
-        break;
-
-        case 'EST':
-            if (getVoisin(indice,d)>=0) //si l'indice du voisin est positif (si il appartient au graphe)
-            {
-                return true; 
-            }else return false; 
-        break;
-
-        case 'OUEST':
-            if (getVoisin(indice,d)>=0) //si l'indice du voisin est positif (si il appartient au graphe)
-            {
-                return true; 
-            }else return false; 
-        break;
-
-        case 'SUD':
-            if (getVoisin(indice,d)>=0) //si l'indice du voisin est positif (si il appartient au graphe)
-            {
-                return true; 
-            }else return false; 
-        break;
-    }
-}
-
 
 void Graphe::modifAltitude(int indice, int nouvelleAltitude)
 {
-    altitude[indice]=nouvelleAltitude;
+    if (!this->verifIndice(indice))
+    {
+        return;
+    }
+    this->altitude[indice] = nouvelleAltitude;
+}
+
+int Graphe::nombreVoisin(int indice)
+{
+    int cpt = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        if (this->getVoisin(indice, static_cast<Direction>(i)) != -1)
+        {
+            cpt++;
+        }
+    }
+    return cpt;
+}
+
+bool Graphe::verifIndice(int indice)
+{
+    if (indice >= this->L * this->C)
+    {
+        return false;
+    }
+    return true;
+}
+
+void Graphe::affichage()
+{
+    for (int i = 0; i < this->L; i++)
+    {
+        for (int j = 0; j < this->C; j++)
+        {
+            int tmp = this->getIndice(i, j);
+            std::cout << "(Indice: " << tmp << ", Altitude: " << this->altitude[tmp] << ") ";
+        }
+        std::cout << std::endl;
+    }
 }
