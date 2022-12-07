@@ -5,9 +5,18 @@
 int main()
 {
     Graphe a = Graphe("data.txt");
+    std::vector<int>depart; 
+    depart.push_back(2);
+    depart.push_back(14);
+    depart.push_back(19);
     std::vector<int> precedent;
     std::vector<double> distance;
-    a.rechercheChemin(7, precedent, distance);
+    std::vector<double>yolo=a.rechercheChemin2(depart, precedent, distance);
+    std::cout<<"-----------------------------"<<std::endl;
+    std::vector<double>yolo2=a.rechercheChemin2(depart, precedent, yolo);
+    std::cout<<"-----------------------------"<<std::endl;
+    a.rechercheChemin(0,precedent,distance);
+
 
     // std::cout << "****TEST*getIndice()****" << std::endl;
     // std::cout << a.getIndice(1, 1) << " "; // Attendu 7

@@ -206,3 +206,58 @@ void Graphe::rechercheChemin(int depart, std::vector<int> precedent, std::vector
         std::cout<<i<<" "<<distance[i]<<std::endl;
     }
 }
+
+
+
+
+
+
+
+
+std::vector<double> Graphe::rechercheChemin2(std::vector<int>depart, std::vector<int> precedent, std::vector<double> distance)
+{
+    for (int i=0; i<(this->L*this->C); i++) //parcours de tous les noeuds 
+    {
+        precedent.push_back(i); //convention : le precedent d'un noeud est lui même
+        distance.push_back(std::numeric_limits<double>::infinity()); //valeur infini pour la distance 
+        //depart.push_back(i); //ajout de tous les noeuds dans départ 
+    }
+    
+    std::priority_queue< std::pair<double,int>, std::vector<std::pair<double,int> >, std::greater<std::pair <double,int> > > F; //création file à priorité nommé F => ordre décroissant 
+
+    for (int i=0; i<depart.size(); i++)
+    {
+        distance[i]=0;
+        //precedent[i]=i;
+        F.push(std::make_pair(distance[i],depart[i])); // insertion du tuple (paire) distance[depart]/depart dans la file à prio F (la priorité se fait sur distance et pas départ)
+    }
+
+    while (!F.empty()) //tant que F n'est pas vide 
+    {
+        int n;
+        n=F.top().second; // n prend la valeur du PREMIER sommet (deuxieme valeur du couple) de la file de priorité => distance min
+        F.pop(); //supression du Premier élément de la file de priorité
+        for (int i=0; i<4; i++)
+        {
+            if (this->getVoisin(n, static_cast<Direction>(i)) != -1) // si i est voisin de n (different de -1 => existe)
+            {
+                double distanceVoisin= distance[this->getVoisin(n, static_cast<Direction>(i))]; 
+                //this->getDistance(depart,static_cast<Direction>(i)); //distance entre n et son voisin i 
+                double distanceN = distance[n];
+                double dnv = distanceN + this->getDistance(n,static_cast<Direction>(i)); //dnv est le coût (distance noeud de depart + distance avec le voisin i)
+                if (dnv < distanceVoisin)
+                {
+                    distance[this->getVoisin(n, static_cast<Direction>(i))]=dnv;
+                    precedent[this->getVoisin(n, static_cast<Direction>(i))]=n;
+                    F.push(std::make_pair(dnv, this->getVoisin(n, static_cast<Direction>(i))));
+                }
+            }
+            //std::cout<<"Pas de voisin :" <<static_cast<Direction>(i)<<std::endl;
+        }
+    }
+    for (int i=0; i<(this->L*this->C); i++)
+    {
+        std::cout<<i<<" "<<distance[i]<<std::endl;
+    }
+    return distance; 
+}

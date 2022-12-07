@@ -32,6 +32,7 @@ public:
     void affichage();
 
     void rechercheChemin(int depart, std::vector<int> precedent, std::vector<double> distance);
+    std::vector<double> rechercheChemin2(std::vector<int> depart, std::vector<int> precedent, std::vector<double> distance);
     void livraison();
 
 private:
