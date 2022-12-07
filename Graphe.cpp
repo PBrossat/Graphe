@@ -198,12 +198,12 @@ void Graphe::rechercheChemin(int depart, std::vector<int> precedent, std::vector
                     F.push(std::make_pair(dnv, this->getVoisin(n, static_cast<Direction>(i))));
                 }
             }
-            std::cout<<"Pas de voisin :" <<static_cast<Direction>(i)<<std::endl;
+            //std::cout<<"Pas de voisin :" <<static_cast<Direction>(i)<<std::endl;
         }
     }
     for (int i=0; i<(this->L*this->C); i++)
     {
-        std::cout<<i<<" "<<distance[i]<<std::endl;
+        std::cout<<i<<" "<<distance[i]<<"     "<<precedent[i] <<std::endl;
     }
 }
 
@@ -257,7 +257,7 @@ std::vector<double> Graphe::rechercheChemin2(std::vector<int>depart, std::vector
     }
     for (int i=0; i<(this->L*this->C); i++)
     {
-        std::cout<<i<<" "<<distance[i]<<std::endl;
+        std::cout<<i<<" "<<distance[i]<<"     "<<precedent[i] <<std::endl;
     }
     return distance; 
 }
