@@ -28,10 +28,10 @@ public:
     void modifAltitude(int, int);
     int nombreVoisin(int);
     bool verifIndice(int);
-
+    double getDistance(int indice1,Direction d);//distance entre 2 indices (indice1 et son voisin via la direction)
     void affichage();
 
-    void rechercheChemin();
+    void rechercheChemin(int depart, std::vector<int> precedent, std::vector<double> distance);
     void livraison();
 
 private:
