@@ -209,7 +209,7 @@ std::vector<double> Graphe::rechercheChemin(int depart, std::vector<int> precede
     precedent[depart] = depart;
     distance[depart] = 0; // met la priorité du sommets de départ à 0
 
-    std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int>>, std::greater<std::pair<double, int>>> F; // création file à priorité nommé F trier par  ordre croissant
+    std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int> >, std::greater<std::pair<double, int> > > F; // création file à priorité nommé F trier par  ordre croissant
     F.push(std::make_pair(distance[depart], depart));                                                                         // insertion du tuple (paire) distance[depart]/depart dans la file à prio F (la priorité se fait sur distance et pas départ)
 
     while (!F.empty()) // tant que F n'est pas vide
@@ -252,7 +252,7 @@ std::vector<std::pair<std::vector<int>, std::vector<double>>> Graphe::rechercheC
         // depart.push_back(i); //ajout de tous les noeuds dans départ
     }
 
-    std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int>>, std::greater<std::pair<double, int>>> F; // création file à priorité nommé F => ordre décroissant
+    std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int> >, std::greater<std::pair<double, int> > > F; // création file à priorité nommé F => ordre décroissant
 
     for (int i = 0; i < depart.size(); i++)
     {
