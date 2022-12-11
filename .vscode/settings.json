@@ -79,6 +79,8 @@
     "__functional_base": "cpp",
     "algorithm": "cpp",
     "functional": "cpp",
-    "queue": "cpp"
+    "queue": "cpp",
+    "ranges": "cpp",
+    "span": "cpp"
   }
 }

@@ -1,11 +1,11 @@
 #include <fstream>
 #include <string>
-#include "Graphe.h"
 #include <limits.h>
 #include <queue>
 #include <utility>
 #include <cmath>
-#include <ctgmath>
+// #include <ctgmath>
+#include "Graphe.h"
 
 // Constructeur
 // Paramètre: data Fichier contenant les informations du graphes à créer
@@ -242,8 +242,8 @@ std::vector<double> Graphe::rechercheChemin(int depart, std::vector<int> precede
 // Paramètre: vector<int> depart - vector d'indice de multiples sommet indiquant le départ de la recherche
 //            vector<int> précédent - vector stokant le précédant de chaque sommets durant la recherche
 //            vector<double> distance - vector stokant les distance entre les sommets
-// Retourne: vector<double> distance- vector contenant les distances entre les sommets
-std::vector<double> Graphe::rechercheChemin2(std::vector<int> depart, std::vector<int> precedent, std::vector<double> distance)
+// Retourne: vector<pair<vector<int>, vector<double>>> res - vector contenant les précédent des sommetes et les distances entre les sommets
+std::vector<std::pair<std::vector<int>, std::vector<double>>> Graphe::rechercheChemin2(std::vector<int> depart, std::vector<int> precedent, std::vector<double> distance)
 {
     for (int i = 0; i < (this->L * this->C); i++) // parcours de tous les noeuds
     {
@@ -259,38 +259,157 @@ std::vector<double> Graphe::rechercheChemin2(std::vector<int> depart, std::vecto
         distance[depart[i]] = 0;
         precedent[depart[i]] = depart[i];
         F.push(std::make_pair(distance[depart[i]], depart[i])); // insertion du tuple (paire) distance[depart]/depart dans la file à prio F (la priorité se fait sur distance et pas départ)
-    }
 
-    while (!F.empty()) // tant que F n'est pas vide
-    {
-        int n;
-        n = F.top().second; // n prend la valeur du PREMIER sommet (deuxieme valeur du couple) de la file de priorité => distance min
-        F.pop();            // supression du Premier élément de la file de priorité
-        for (int i = 0; i < 4; i++)
+        while (!F.empty()) // tant que F n'est pas vide
         {
-            int tmp = this->getVoisin(n, static_cast<Direction>(i));
-            if (tmp != -1) // si i est voisin de n (different de -1 => existe)
+            int n;
+            n = F.top().second; // n prend la valeur du PREMIER sommet (deuxieme valeur du couple) de la file de priorité => distance min
+            F.pop();            // supression du Premier élément de la file de priorité
+            for (int j = 0; j < 4; j++)
             {
-                double distanceVoisin = distance[tmp];
-                // this->getDistance(depart,static_cast<Direction>(i)); //distance entre n et son voisin i
-                double distanceN = distance[n];
-                double dnv = distanceN + this->getDistance(n, static_cast<Direction>(i)); // dnv est le coût (distance noeud de depart + distance avec le voisin i)
-                if (dnv < distanceVoisin)
+                int tmp = this->getVoisin(n, static_cast<Direction>(j));
+                if (tmp != -1) // si i est voisin de n (different de -1 => existe)
                 {
-                    distance[tmp] = dnv;
-                    precedent[tmp] = n;
-                    F.push(std::make_pair(dnv, tmp));
+                    double distanceVoisin = distance[tmp];
+                    // this->getDistance(depart,static_cast<Direction>(i)); //distance entre n et son voisin i
+                    double distanceN = distance[n];
+                    double dnv = distanceN + this->getDistance(n, static_cast<Direction>(j)); // dnv est le coût (distance noeud de depart + distance avec le voisin i)
+                    if (dnv < distanceVoisin)
+                    {
+                        distance[tmp] = dnv;
+                        precedent[tmp] = n;
+                        F.push(std::make_pair(dnv, tmp));
+                    }
                 }
             }
         }
     }
-    return distance;
+    std::vector<std::pair<std::vector<int>, std::vector<double>>> res;
+    res.push_back(std::make_pair(precedent, distance));
+    return res;
 }
 
-void Graphe::voronoi()
+// Fonction d'affichage de Voronoi
+// Paramètre: vector<int> depart - vector d'indices indiquant l'indices des sommets de départ
+void Graphe::voronoi(std::vector<int> depart)
 {
+    std::vector<std::pair<std::string, int>> res; // vector stokant le resultat à afficher
+    for (int i = 0; i < (this->L * this->C); i++)
+    {
+        res.push_back(std::make_pair(" ", i)); // remplissage du tableau
+    }
+    for (int i = 0; i < depart.size(); i++)
+    {
+        std::string c1;
+        std::string c2;
+        std::string color = " ";
+        while (color == res[depart[i]].first) // tant que les couleurs ne sont pas différentes // TODO: refaire la vérification
+        {
+            c1 = std::to_string(std::rand() % 8);
+            c2 = std::to_string(std::rand() % 3);
+            color = "\033[" + c2 + ";3" + c1 + "m"; // Selectionne une couleur aléatoire
+        }
+        res[depart[i]] = std::make_pair(color, depart[i]); // stockage de l'indice colorée dans le vector res
+    }
+    std::vector<int> precedent;
+    std::vector<double> distance;
+    std::vector<std::pair<std::vector<int>, std::vector<double>>> tmp = this->rechercheChemin2(depart, precedent, distance); // réalisation de la recherche de chemin
+    for (int i = 0; i < tmp.size(); i++)
+    {
+        for (int j = 0; j < tmp[i].first.size(); j++)
+        {
+            int tmp1 = j;
+            while (tmp1 != tmp[i].first[tmp1]) // Tant que le precedent n'est pas lui-même
+            {
+                tmp1 = tmp[i].first[tmp1]; // rechercher le précendent du sommets étudiée
+            }
+            res[j] = std::make_pair(res[tmp1].first, j); // stockage de l'indice coloré dans le vector résultat
+        }
+    }
+    for (int i = 0; i < res.size(); i++)
+    {
+        if (i % this->C == 0)
+        {
+            std::cout << std::endl;
+        }
+        std::cout << res[i].first << res[i].second << " "; // affichage du vector resultat
+    }
 }
 
-void livraisonVoironoi()
+// Fonction affichant Voronoi pour une fonction de cout différentes
+// Paramètre: vector<pair<int,int>> - vector indiquant les sommets de départ de la recherche et leur cout kilométriques
+void Graphe::livraisonVoronoi(std::vector<std::pair<int, int>> depart)
 {
+    std::vector<std::pair<std::string, int>> res;
+    for (int i = 0; i < (this->L * this->C); i++)
+    {
+        res.push_back(std::make_pair(" ", i));
+    }
+    for (int i = 0; i < depart.size(); i++)
+    {
+        std::string c1;
+        std::string c2;
+        std::string color = " ";
+        while (color == res[depart[i].first].first)
+        {
+            c1 = std::to_string(std::rand() % 8);
+            c2 = std::to_string(std::rand() % 3);
+            color = "\033[" + c2 + ";3" + c1 + "m";
+        }
+        res[depart[i].first] = std::make_pair(color, depart[i].first);
+    }
+    std::vector<int> precedent;
+    std::vector<double> distance;
+    for (int i = 0; i < (this->L * this->C); i++)
+    {
+        precedent.push_back(i);
+        distance.push_back(std::numeric_limits<double>::infinity());
+    }
+    std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int>>, std::greater<std::pair<double, int>>> F;
+    for (int i = 0; i < depart.size(); i++)
+    {
+        distance[depart[i].first] = 0;
+        precedent[depart[i].first] = depart[i].first;
+        F.push(std::make_pair(distance[depart[i].first], depart[i].first));
+
+        while (!F.empty()) // while the queue is not empty
+        {
+            int n;
+            n = F.top().second;
+            F.pop();
+            for (int j = 0; j < 4; j++)
+            {
+                int tmp = this->getVoisin(n, static_cast<Direction>(j));
+                if (tmp != -1)
+                {
+                    double distanceNeighbour = distance[tmp];
+                    double distance_n = distance[n];
+                    double dnv = distance_n + (depart[i].second * this->getDistance(n, static_cast<Direction>(j))); // changement de la fonction de cout
+                    if (dnv < distanceNeighbour)
+                    {
+                        distance[tmp] = dnv;
+                        precedent[tmp] = n;
+                        F.push(std::make_pair(dnv, tmp));
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i < precedent.size(); i++)
+    {
+        int tmp = i;
+        while (tmp != precedent[tmp])
+        {
+            tmp = precedent[tmp];
+        }
+        res[i] = std::make_pair(res[tmp].first, i);
+    }
+    for (int i = 0; i < res.size(); i++)
+    {
+        if (i % this->C == 0)
+        {
+            std::cout << std::endl;
+        }
+        std::cout << res[i].first << res[i].second << " ";
+    }
 }
