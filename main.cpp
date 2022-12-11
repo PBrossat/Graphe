@@ -1,13 +1,21 @@
 #include <fstream>
 #include <string>
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 #include "Graphe.h"
 
 int main()
 {
+    srand((unsigned int)time(NULL));
     Graphe a = Graphe("data.txt");
     std::vector<int> precedent;
     std::vector<double> distance;
     std::vector<int> depart;
+    std::vector<std::pair<int, int> > start2;
+    start2.push_back(std::make_pair(0, 10));
+    start2.push_back(std::make_pair(14, 2));
+    start2.push_back(std::make_pair(19, 40));
     depart.push_back(0);
     depart.push_back(14);
     depart.push_back(19);
@@ -77,12 +85,41 @@ int main()
     std::cout << "****TEST*Dijkstra*MultiSrc****" << std::endl;
     distance.clear();
     precedent.clear();
-    std::vector<double> d2 = a.rechercheChemin2(depart, precedent, distance);
+    std::vector<std::pair<std::vector<int>, std::vector<double> > > d2 = a.rechercheChemin2(depart, precedent, distance);
+    for (int i = 0; i < d2.size(); i++)
+    {
+        for (int j = 0; j < d2[i].first.size() || j < d2[i].second.size(); j++)
+        {
+            std::cout << "N: " << j << " P: " << d2[i].first[j] << " D: " << d2[i].second[j] << std::endl;
+        }
+    }
+    std::cout<<std::endl;
+    //std::cout<<std::endl;
+
+    std::cout << "TEST*Voronoi" << std::endl;
+    distance.clear();
+    precedent.clear();
+    a.voronoi(depart);
+    std::cout << std::endl;
+    /* 
+    std::cout << "*" << std::endl;
+    std::vector<double> d3 = a.dijkstraSeekPathMultiSrc(start, previous, d2);
     for (int i = 0; i < d2.size(); i++)
     {
         std::cout << i << ": " << d2[i] << std::endl;
     }
+    std::cout << std::endl;
+    */
 
-    std::cout << "END" << std::endl;
+    std::string t = "\033[0m";
+    std::cout << t << "**TEST*livraisonVoronoi**" << std::endl;
+    distance.clear();
+    precedent.clear();
+    a.livraisonVoronoi(start2);
+    std::cout << std::endl;
+
+    std::cout << t << "END" << std::endl;
+
+
     return 0;
 }

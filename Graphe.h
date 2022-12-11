@@ -32,9 +32,9 @@ public:
     void affichage();
 
     std::vector<double> rechercheChemin(int, std::vector<int>, std::vector<double>);
-    std::vector<std::pair<std::vector<int>, std::vector<double>>> rechercheChemin2(std::vector<int>, std::vector<int>, std::vector<double>);
+    std::vector<std::pair<std::vector<int>, std::vector<double> > > rechercheChemin2(std::vector<int>, std::vector<int>, std::vector<double>);
     void voronoi(std::vector<int>);
-    void livraisonVoronoi(std::vector<std::pair<int, int>>);
+    void livraisonVoronoi(std::vector<std::pair<int, int> >);
 
 private:
     int L;

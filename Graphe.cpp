@@ -243,7 +243,7 @@ std::vector<double> Graphe::rechercheChemin(int depart, std::vector<int> precede
 //            vector<int> précédent - vector stokant le précédant de chaque sommets durant la recherche
 //            vector<double> distance - vector stokant les distance entre les sommets
 // Retourne: vector<pair<vector<int>, vector<double>>> res - vector contenant les précédent des sommetes et les distances entre les sommets
-std::vector<std::pair<std::vector<int>, std::vector<double>>> Graphe::rechercheChemin2(std::vector<int> depart, std::vector<int> precedent, std::vector<double> distance)
+std::vector<std::pair<std::vector<int>, std::vector<double> > > Graphe::rechercheChemin2(std::vector<int> depart, std::vector<int> precedent, std::vector<double> distance)
 {
     for (int i = 0; i < (this->L * this->C); i++) // parcours de tous les noeuds
     {
@@ -284,7 +284,7 @@ std::vector<std::pair<std::vector<int>, std::vector<double>>> Graphe::rechercheC
             }
         }
     }
-    std::vector<std::pair<std::vector<int>, std::vector<double>>> res;
+    std::vector<std::pair<std::vector<int>, std::vector<double> > > res;
     res.push_back(std::make_pair(precedent, distance));
     return res;
 }
@@ -293,7 +293,7 @@ std::vector<std::pair<std::vector<int>, std::vector<double>>> Graphe::rechercheC
 // Paramètre: vector<int> depart - vector d'indices indiquant l'indices des sommets de départ
 void Graphe::voronoi(std::vector<int> depart)
 {
-    std::vector<std::pair<std::string, int>> res; // vector stokant le resultat à afficher
+    std::vector<std::pair<std::string, int> > res; // vector stokant le resultat à afficher
     for (int i = 0; i < (this->L * this->C); i++)
     {
         res.push_back(std::make_pair(" ", i)); // remplissage du tableau
@@ -313,7 +313,7 @@ void Graphe::voronoi(std::vector<int> depart)
     }
     std::vector<int> precedent;
     std::vector<double> distance;
-    std::vector<std::pair<std::vector<int>, std::vector<double>>> tmp = this->rechercheChemin2(depart, precedent, distance); // réalisation de la recherche de chemin
+    std::vector<std::pair<std::vector<int>, std::vector<double> > > tmp = this->rechercheChemin2(depart, precedent, distance); // réalisation de la recherche de chemin
     for (int i = 0; i < tmp.size(); i++)
     {
         for (int j = 0; j < tmp[i].first.size(); j++)
@@ -338,9 +338,9 @@ void Graphe::voronoi(std::vector<int> depart)
 
 // Fonction affichant Voronoi pour une fonction de cout différentes
 // Paramètre: vector<pair<int,int>> - vector indiquant les sommets de départ de la recherche et leur cout kilométriques
-void Graphe::livraisonVoronoi(std::vector<std::pair<int, int>> depart)
+void Graphe::livraisonVoronoi(std::vector<std::pair<int, int> > depart)
 {
-    std::vector<std::pair<std::string, int>> res;
+    std::vector<std::pair<std::string, int> > res;
     for (int i = 0; i < (this->L * this->C); i++)
     {
         res.push_back(std::make_pair(" ", i));
@@ -365,7 +365,7 @@ void Graphe::livraisonVoronoi(std::vector<std::pair<int, int>> depart)
         precedent.push_back(i);
         distance.push_back(std::numeric_limits<double>::infinity());
     }
-    std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int>>, std::greater<std::pair<double, int>>> F;
+    std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int> >, std::greater<std::pair<double, int> > > F;
     for (int i = 0; i < depart.size(); i++)
     {
         distance[depart[i].first] = 0;
