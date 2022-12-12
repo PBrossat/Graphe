@@ -12,14 +12,28 @@ int main()
     std::vector<int> precedent;
     std::vector<double> distance;
     std::vector<int> depart;
-    std::vector<std::pair<int, int> > start2;
-    start2.push_back(std::make_pair(0, 10));
-    start2.push_back(std::make_pair(14, 2));
-    start2.push_back(std::make_pair(19, 40));
+    std::vector<std::pair<int, int>> depart2;
+    std::ifstream file("library.txt");
+    if (file.is_open())
+    {
+        std::string line;
+        int cpt = 0;
+        int v1, v2, v3;
+        while (file >> v1 >> v2 >> v3)
+        {
+            depart.push_back(a.getIndice(v1, v2));
+            depart2.push_back(std::make_pair(a.getIndice(v1, v2), v3));
+        }
+    }
+    /*
     depart.push_back(0);
     depart.push_back(14);
     depart.push_back(19);
 
+    depart2.push_back(std::make_pair(0, 10));
+    depart2.push_back(std::make_pair(14, 2));
+    depart2.push_back(std::make_pair(19, 40));
+    */
     std::cout << "****TEST*getIndice()****" << std::endl;
     std::cout << a.getIndice(1, 1) << " "; // Attendu 7
     std::cout << a.getIndice(2, 2) << " "; // Attendu 14
@@ -85,7 +99,7 @@ int main()
     std::cout << "****TEST*Dijkstra*MultiSrc****" << std::endl;
     distance.clear();
     precedent.clear();
-    std::vector<std::pair<std::vector<int>, std::vector<double> > > d2 = a.rechercheChemin2(depart, precedent, distance);
+    std::vector<std::pair<std::vector<int>, std::vector<double>>> d2 = a.rechercheChemin2(depart, precedent, distance);
     for (int i = 0; i < d2.size(); i++)
     {
         for (int j = 0; j < d2[i].first.size() || j < d2[i].second.size(); j++)
@@ -93,33 +107,23 @@ int main()
             std::cout << "N: " << j << " P: " << d2[i].first[j] << " D: " << d2[i].second[j] << std::endl;
         }
     }
-    std::cout<<std::endl;
-    //std::cout<<std::endl;
+    std::cout << std::endl;
 
     std::cout << "TEST*Voronoi" << std::endl;
     distance.clear();
     precedent.clear();
     a.voronoi(depart);
     std::cout << std::endl;
-    /* 
-    std::cout << "*" << std::endl;
-    std::vector<double> d3 = a.dijkstraSeekPathMultiSrc(start, previous, d2);
-    for (int i = 0; i < d2.size(); i++)
-    {
-        std::cout << i << ": " << d2[i] << std::endl;
-    }
-    std::cout << std::endl;
-    */
 
     std::string t = "\033[0m";
+
     std::cout << t << "**TEST*livraisonVoronoi**" << std::endl;
     distance.clear();
     precedent.clear();
-    a.livraisonVoronoi(start2);
+    a.livraisonVoronoi(depart2);
     std::cout << std::endl;
 
     std::cout << t << "END" << std::endl;
-
 
     return 0;
 }
