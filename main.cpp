@@ -61,7 +61,6 @@ int main()
     if (file.is_open())
     {
         std::string line;
-        int cpt = 0;
         int v1, v2, v3;
         while (file >> v1 >> v2 >> v3)
         {
