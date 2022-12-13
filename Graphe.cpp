@@ -54,6 +54,24 @@ Graphe::~Graphe()
 {
 }
 
+// Accesseurs vers le nombre de ligne du Graphe
+int Graphe::getLigne()
+{
+    return this->L;
+}
+
+// Accesseurs vers le nombre de colonnes du Graphe
+int Graphe::getColonne()
+{
+    return this->C;
+}
+
+// Accesseurs vers le tableau contenant l'altitude de chaque sommets du Graphe
+std::vector<int> Graphe::getToutesLesAltitudes()
+{
+    return this->altitude;
+}
+
 // Accesseur de l'indice d'un sommets d'un Graphes
 // Paramètres: int i < nombre de lignes du Graphes
 //             int j < nombre de colonnes du Graphes
@@ -352,7 +370,6 @@ void Graphe::livraisonVoronoi(std::vector<std::pair<int, int>> depart)
     for (int i = 0; i < depart.size(); i++)
     {
         std::string c1;
-
         for (const auto &e : res)
         {
             while (e.first == color)
