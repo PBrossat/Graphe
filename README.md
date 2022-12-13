@@ -62,7 +62,7 @@ Le projet permet de créer l'éxecutable suivant :
                 // (du haut vers le bas et de gauche vers la droite)
 
 
-    ## Le fichier librairy.txt doit ressembler à cela:
+    ## Le fichier library.txt doit ressembler à cela:
     0 0 10           // Coordonnées de la ligne, de la colonne et du coût de livraison/kilomètre dans l'ordre 
     ...             // (du haut vers le bas et de gauche vers la droite)
     ...            // (chaque ligne correspond aux informations d'une et une seule librairie)
