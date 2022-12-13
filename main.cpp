@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "Graphe.h"
 
-void checkData(Graphe a, std::string f, std::vector<int> d, std::vector<std::pair<int, int>> d1)
+void checkData(Graphe a, std::string f, std::vector<int> d, std::vector<std::pair<int, int> > d1)
 {
     int cpt = 0;
     if (a.getToutesLesAltitudes().size() != static_cast<unsigned long long>(a.getLigne() * a.getColonne()))
@@ -49,7 +49,7 @@ int main()
     std::vector<int> precedent;
     std::vector<double> distance;
     std::vector<int> depart;
-    std::vector<std::pair<int, int>> depart2;
+    std::vector<std::pair<int, int> > depart2;
 
     std::string t = "\033[0m";
     std::ifstream file("library.txt");
@@ -133,7 +133,7 @@ int main()
         std::cout << "****TEST*Dijkstra*MultiSrc****" << std::endl;
         distance.clear();
         precedent.clear();
-        std::vector<std::pair<std::vector<int>, std::vector<double>>> d2 = a.rechercheChemin2(depart, precedent, distance);
+        std::vector<std::pair<std::vector<int>, std::vector<double> > > d2 = a.rechercheChemin2(depart, precedent, distance);
         for (int i = 0; i < d2.size(); i++)
         {
             for (int j = 0; j < d2[i].first.size() || j < d2[i].second.size(); j++)
