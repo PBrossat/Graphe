@@ -298,16 +298,16 @@ void Graphe::voronoi(std::vector<int> depart)
         res.push_back(std::make_pair(" ", i)); // remplissage du tableau
     }
     std::string color = " ";
+    std::string c2 = std::to_string(std::rand() % 3);
     for (int i = 0; i < depart.size(); i++)
     {
         std::string c1;
-        std::string c2;
         for (const auto &e : res)
         {
             while (e.first == color)
             {
                 c1 = std::to_string(std::rand() % 8);
-                c2 = std::to_string(std::rand() % 3);
+                // c2 = std::to_string(std::rand() % 3);
                 color = "\033[" + c2 + ";3" + c1 + "m";
             }
         }
@@ -348,16 +348,17 @@ void Graphe::livraisonVoronoi(std::vector<std::pair<int, int>> depart)
         res.push_back(std::make_pair(" ", i));
     }
     std::string color = " ";
+    std::string c2 = std::to_string(std::rand() % 3);
     for (int i = 0; i < depart.size(); i++)
     {
         std::string c1;
-        std::string c2;
+
         for (const auto &e : res)
         {
             while (e.first == color)
             {
                 c1 = std::to_string(std::rand() % 8);
-                c2 = std::to_string(std::rand() % 3);
+                // c2 = std::to_string(std::rand() % 3);
                 color = "\033[" + c2 + ";3" + c1 + "m";
             }
         }
