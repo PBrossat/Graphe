@@ -346,6 +346,13 @@ void Graphe::voronoi(std::vector<int> depart)
             res[j] = std::make_pair(res[tmp1].first, j); // stockage de l'indice coloré dans le vector résultat
         }
     }
+    std::cout << "Library:"
+              << " ";
+    for (int i = 0; i < depart.size(); i++)
+    {
+        std::cout << depart[i] << " ";
+    }
+    std::cout << std::endl;
     for (int i = 0; i < res.size(); i++)
     {
         if (i % this->C == 0)
@@ -427,6 +434,13 @@ void Graphe::livraisonVoronoi(std::vector<std::pair<int, int>> depart)
         }
         res[i] = std::make_pair(res[tmp].first, i);
     }
+    std::cout << "Library:"
+              << " ";
+    for (int i = 0; i < depart.size(); i++)
+    {
+        std::cout << depart[i].first << " ";
+    }
+    std::cout << std::endl;
     for (int i = 0; i < res.size(); i++)
     {
         if (i % this->C == 0)

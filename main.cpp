@@ -31,6 +31,11 @@ void checkData(Graphe a, std::string f, std::vector<int> d, std::vector<std::pai
     {
         throw(false);
     }
+    if (d.size() > static_cast<unsigned long long>(a.getLigne() * a.getColonne()) || d1.size() > static_cast<unsigned long long>(a.getLigne() * a.getColonne()))
+    {
+        throw(false);
+        return;
+    }
     for (const auto &e : d1)
     {
         if (e.first == -1)
@@ -161,8 +166,8 @@ int main()
                   << "Données Invalide" << std::endl;
         std::cout << std::endl;
         std::cout << "Le fichier contenant les informations du Graphe doit être sous cette forme: " << std::endl;
-        std::cout << "4 5 // nombre de lignes puis nombre de colonnes" << std::endl;
-        std::cout << "1 2 3 4 // ALtitudes des L*C sommets listés lignes par lignes du haut vers le bas et de gauche vers la droite" << std::endl;
+        std::cout << "4 6 // nombre de lignes puis nombre de colonnes" << std::endl;
+        std::cout << "1 2 3 4 ... // ALtitudes des L*C sommets listés lignes par lignes du haut vers le bas et de gauche vers la droite" << std::endl;
         std::cout << std::endl;
         std::cout << "Le fichier contenant les informations concernant les différentes library doit être sous cette forme: " << std::endl;
         std::cout << "0 0 10 // coordonnée de la lignes puis de la colonnes du sommet et le cout kilométriques associée à ce sommet" << std::endl;
