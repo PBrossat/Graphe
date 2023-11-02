@@ -1,6 +1,6 @@
 # Graphe
 
-    Lien vers le projet : https://forge.univ-lyon1.fr/p2002218/brossat_savigny
+    Lien vers le projet : [https://forge.univ-lyon1.fr/p2002218/brossat_savigny](https://github.com/PBrossat/Graphe)
 
 # Contributeurs : 
 
